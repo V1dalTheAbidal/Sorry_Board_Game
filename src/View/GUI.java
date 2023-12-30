@@ -872,7 +872,8 @@ public class GUI extends JFrame{
 
             } else if (numberCardInPlay.getNumber() == 3){//TODO: END OF CARD 2 BEGGING OF CARD 3
                 if (pawn1InPlay.getHome() && pawn2InPlay.getHome()){
-
+                    System.out.println("Cannot move yet. Must draw a card with 1 or 2");
+                    return;
                 }else if(pawn1InPlay.getHome() && !pawn2InPlay.getHome()){
                     if (pawn1InPlay.getColor() == Model.Pawn.COLOR.RED) {
 

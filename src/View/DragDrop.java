@@ -125,7 +125,7 @@ public class DragDrop extends MouseAdapter{
             boardSquares.get(index).setOccupied(true);
             boardSquares.get(index).setOnSquare(gui.getPlayer());
             gui.setActiveIndex2(index);
-            gui.getPawn1().setHome(false);
+            gui.getPawn2().setHome(false);
         }
 
 
@@ -155,6 +155,13 @@ public class DragDrop extends MouseAdapter{
      * <b>Postcondition:</b> returns true if the label is dragged otherwise false
      */
     public void mousePressed(MouseEvent e){
+        if (!gui.isCardInPlay()) {
+            // If no card is in play, prevent pawn movement
+            JOptionPane.showMessageDialog(gui.frame, "You must draw a card before moving a pawn!");
+            return;
+        }
+
+
         System.out.println("Label position: " + labelPosition1);
         System.out.println("Label position: " + labelPosition2);
         System.out.println("Mouse pressed at X: " + e.getX() + ", Y: " + e.getY());
