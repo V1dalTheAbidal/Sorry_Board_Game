@@ -72,6 +72,8 @@ public class GUI extends JFrame{
     private int P22index;
     private int activeIndex1;
     private int activeIndex2;
+    private PlayerPawn enemyPawn1;
+    private PlayerPawn enemyPawn2;
 
     DragDrop dragDrop;
 
@@ -110,6 +112,8 @@ public class GUI extends JFrame{
 
         pawn1InPlay = controller.getPawn1Red();
         pawn2InPlay = controller.getPawn2Red();
+        enemyPawn1 = controller.getPawn1Yellow();
+        enemyPawn2 = controller.getPawn2Yellow();
 
         //set middle cyan square
         cyanMID = new JLabel();
@@ -720,6 +724,9 @@ public class GUI extends JFrame{
             activeIndex1 = P11index;
             activeIndex2 = P12index;
 
+            enemyPawn1 = controller.getPawn1Yellow();
+            enemyPawn2 = controller.getPawn2Yellow();
+
         } else if (controller.getPlayerPlayingNow() == 1) {
             pawn1ForDragNdrop = player2Pawn1;
             pawn2ForDragNdrop = player2Pawn2;
@@ -729,6 +736,9 @@ public class GUI extends JFrame{
 
             activeIndex1 = P21index;
             activeIndex2 = P22index;
+
+            enemyPawn1 = controller.getPawn1Red();
+            enemyPawn2 = controller.getPawn2Red();
         }
         dragNdropFunc();
     }
@@ -784,7 +794,7 @@ public class GUI extends JFrame{
         ArrayList<Square> boardSquares = controller.getBoardSquares();
         System.out.println("IS Card in play? : " + isCardInPlay);
         if (isCardInPlay){
-            if (pawn1InPlay.getHome() && pawn2InPlay.getHome()){
+            if (pawn1InPlay.getStart() && pawn2InPlay.getStart()){
                 if (numberCardInPlay.getNumber() != 1 && numberCardInPlay.getNumber() != 2){
                     canMove = false;
                 }else{
@@ -795,10 +805,10 @@ public class GUI extends JFrame{
 
             System.out.println("Active index1:"+ activeIndex1);
             System.out.println("Active index2:"+ activeIndex2);
-            System.out.println("Is pawn1InPlay home? : " + pawn1InPlay.getHome());
-            System.out.println("Is pawn2InPlay home? : " + pawn2InPlay.getHome());
+            System.out.println("Is pawn1InPlay home? : " + pawn1InPlay.getStart());
+            System.out.println("Is pawn2InPlay home? : " + pawn2InPlay.getStart());
             if (numberCardInPlay.getNumber() == 1){
-                if (pawn1InPlay.getHome() && pawn2InPlay.getHome()){
+                if (pawn1InPlay.getStart() && pawn2InPlay.getStart()){
                     if (pawn1InPlay.getColor() == Model.Pawn.COLOR.RED){
                         boardSquaresAllowedMovementForP1.add(squarePositions.get(56));
                         boardSquaresAllowedMovementForP2.add(squarePositions.get(56));
@@ -810,7 +820,7 @@ public class GUI extends JFrame{
 
                     }
 
-                }else if(pawn1InPlay.getHome() && !pawn2InPlay.getHome()){
+                }else if(pawn1InPlay.getStart() && !pawn2InPlay.getStart()){
                     if (pawn1InPlay.getColor() == Model.Pawn.COLOR.RED) {
                         boardSquaresAllowedMovementForP1.add(squarePositions.get(56));
                         boardSquaresAllowedMovementForP2.add(squarePositions.get(activeIndex2 - 1));
@@ -822,7 +832,7 @@ public class GUI extends JFrame{
                     }
 
 
-                }else if (!pawn1InPlay.getHome() && pawn2InPlay.getHome()){
+                }else if (!pawn1InPlay.getStart() && pawn2InPlay.getStart()){
                     if (pawn1InPlay.getColor() == Model.Pawn.COLOR.RED) {
                         boardSquaresAllowedMovementForP2.add(squarePositions.get(56));
                         boardSquaresAllowedMovementForP1.add(squarePositions.get(activeIndex2 - 1));
@@ -833,13 +843,13 @@ public class GUI extends JFrame{
 
                     }
 
-                }else if (!pawn1InPlay.getHome() && !pawn2InPlay.getHome()) {
+                }else if (!pawn1InPlay.getStart() && !pawn2InPlay.getStart()) {
                     boardSquaresAllowedMovementForP1.add(squarePositions.get(activeIndex1-1));
                     boardSquaresAllowedMovementForP2.add(squarePositions.get(activeIndex2-1));
                 }
 
             } else if (numberCardInPlay.getNumber() == 2){//TODO: END OF CARD 1 BEGGING OF CARD 2
-                if (pawn1InPlay.getHome() && pawn2InPlay.getHome()){
+                if (pawn1InPlay.getStart() && pawn2InPlay.getStart()){
                     if (pawn1InPlay.getColor() == Model.Pawn.COLOR.RED){
                         boardSquaresAllowedMovementForP1.add(squarePositions.get(56));
                         boardSquaresAllowedMovementForP2.add(squarePositions.get(56));
@@ -851,7 +861,7 @@ public class GUI extends JFrame{
 
                     }
 
-                }else if(pawn1InPlay.getHome() && !pawn2InPlay.getHome()){
+                }else if(pawn1InPlay.getStart() && !pawn2InPlay.getStart()){
                     if (pawn1InPlay.getColor() == Model.Pawn.COLOR.RED) {
                         boardSquaresAllowedMovementForP1.add(squarePositions.get(56));
                         boardSquaresAllowedMovementForP2.add(squarePositions.get(activeIndex2 - 2));
@@ -863,7 +873,7 @@ public class GUI extends JFrame{
                     }
 
 
-                }else if (!pawn1InPlay.getHome() && pawn2InPlay.getHome()){
+                }else if (!pawn1InPlay.getStart() && pawn2InPlay.getStart()){
                     if (pawn1InPlay.getColor() == Model.Pawn.COLOR.RED) {
                         boardSquaresAllowedMovementForP2.add(squarePositions.get(56));
                         boardSquaresAllowedMovementForP1.add(squarePositions.get(activeIndex1 - 2));
@@ -874,17 +884,17 @@ public class GUI extends JFrame{
 
                     }
 
-                }else if (!pawn1InPlay.getHome() && !pawn2InPlay.getHome()) {
+                }else if (!pawn1InPlay.getStart() && !pawn2InPlay.getStart()) {
                     boardSquaresAllowedMovementForP1.add(squarePositions.get(activeIndex1-2));
                     boardSquaresAllowedMovementForP2.add(squarePositions.get(activeIndex2-2));
                 }
                 //TODO: IF CARD 2 IS DRAWN THEN DRAW ANOTHER CARD
 
             } else if (numberCardInPlay.getNumber() == 3){//TODO: END OF CARD 2 BEGGING OF CARD 3
-                if (pawn1InPlay.getHome() && pawn2InPlay.getHome()){
+                if (pawn1InPlay.getStart() && pawn2InPlay.getStart()){
                     System.out.println("Cannot move yet. Must draw a card with 1 or 2");
                     return;
-                }else if(pawn1InPlay.getHome() && !pawn2InPlay.getHome()){
+                }else if(pawn1InPlay.getStart() && !pawn2InPlay.getStart()){
                     if (pawn1InPlay.getColor() == Model.Pawn.COLOR.RED) {
 
                         boardSquaresAllowedMovementForP2.add(squarePositions.get(activeIndex2 - 3));
@@ -895,7 +905,7 @@ public class GUI extends JFrame{
 
                     }
 
-                }else if (!pawn1InPlay.getHome() && pawn2InPlay.getHome()){
+                }else if (!pawn1InPlay.getStart() && pawn2InPlay.getStart()){
                     if (pawn1InPlay.getColor() == Model.Pawn.COLOR.RED) {
                         boardSquaresAllowedMovementForP1.add(squarePositions.get(activeIndex1 - 3));
 
@@ -906,41 +916,41 @@ public class GUI extends JFrame{
 
                     }
 
-                }else if (!pawn1InPlay.getHome() && !pawn2InPlay.getHome()) {
+                }else if (!pawn1InPlay.getStart() && !pawn2InPlay.getStart()) {
                     boardSquaresAllowedMovementForP1.add(squarePositions.get(activeIndex1-3));
                     boardSquaresAllowedMovementForP2.add(squarePositions.get(activeIndex2-3));
                 }
 
             } else if (numberCardInPlay.getNumber() == 4){
-                if (pawn1InPlay.getHome() && pawn2InPlay.getHome()){
+                if (pawn1InPlay.getStart() && pawn2InPlay.getStart()){
 
-                }else if(pawn1InPlay.getHome() && !pawn2InPlay.getHome()){
+                }else if(pawn1InPlay.getStart() && !pawn2InPlay.getStart()){
                     if (pawn1InPlay.getColor() == Model.Pawn.COLOR.RED) {
-                        boardSquaresAllowedMovementForP2.add(squarePositions.get(activeIndex2 - 4));
+                        boardSquaresAllowedMovementForP2.add(squarePositions.get(activeIndex2 + 4));
 
                     }else{
-                        boardSquaresAllowedMovementForP2.add(squarePositions.get(activeIndex2-4));
+                        boardSquaresAllowedMovementForP2.add(squarePositions.get(activeIndex2+4));
 
                     }
 
-                }else if (!pawn1InPlay.getHome() && pawn2InPlay.getHome()){
+                }else if (!pawn1InPlay.getStart() && pawn2InPlay.getStart()){
                     if (pawn1InPlay.getColor() == Model.Pawn.COLOR.RED) {
-                        boardSquaresAllowedMovementForP1.add(squarePositions.get(activeIndex1 - 4));
+                        boardSquaresAllowedMovementForP1.add(squarePositions.get(activeIndex1 + 4));
 
                     }else{
-                        boardSquaresAllowedMovementForP1.add(squarePositions.get(activeIndex1-4));
+                        boardSquaresAllowedMovementForP1.add(squarePositions.get(activeIndex1 + 4));
 
                     }
 
-                }else if (!pawn1InPlay.getHome() && !pawn2InPlay.getHome()) {
-                    boardSquaresAllowedMovementForP1.add(squarePositions.get(activeIndex1-4));
-                    boardSquaresAllowedMovementForP2.add(squarePositions.get(activeIndex2-4));
+                }else if (!pawn1InPlay.getStart() && !pawn2InPlay.getStart()) {
+                    boardSquaresAllowedMovementForP1.add(squarePositions.get(activeIndex1+4));
+                    boardSquaresAllowedMovementForP2.add(squarePositions.get(activeIndex2+4));
                 }
 
             } else if (numberCardInPlay.getNumber() == 5){
-                if (pawn1InPlay.getHome() && pawn2InPlay.getHome()){
+                if (pawn1InPlay.getStart() && pawn2InPlay.getStart()){
 
-                }else if(pawn1InPlay.getHome() && !pawn2InPlay.getHome()){
+                }else if(pawn1InPlay.getStart() && !pawn2InPlay.getStart()){
                     if (pawn1InPlay.getColor() == Model.Pawn.COLOR.RED) {
                         boardSquaresAllowedMovementForP2.add(squarePositions.get(activeIndex2 - 5));
 
@@ -949,7 +959,7 @@ public class GUI extends JFrame{
 
                     }
 
-                }else if (!pawn1InPlay.getHome() && pawn2InPlay.getHome()){
+                }else if (!pawn1InPlay.getStart() && pawn2InPlay.getStart()){
                     if (pawn1InPlay.getColor() == Model.Pawn.COLOR.RED) {
                         boardSquaresAllowedMovementForP1.add(squarePositions.get(activeIndex1 - 5));
 
@@ -958,7 +968,7 @@ public class GUI extends JFrame{
 
                     }
 
-                }else if (!pawn1InPlay.getHome() && !pawn2InPlay.getHome()) {
+                }else if (!pawn1InPlay.getStart() && !pawn2InPlay.getStart()) {
                     boardSquaresAllowedMovementForP1.add(squarePositions.get(activeIndex1-5));
                     boardSquaresAllowedMovementForP2.add(squarePositions.get(activeIndex2-5));
                 }
@@ -967,9 +977,9 @@ public class GUI extends JFrame{
 
 
             } else if (numberCardInPlay.getNumber() == 7){
-                if (pawn1InPlay.getHome() && pawn2InPlay.getHome()){
+                if (pawn1InPlay.getStart() && pawn2InPlay.getStart()){
 
-                }else if(pawn1InPlay.getHome() && !pawn2InPlay.getHome()){
+                }else if(pawn1InPlay.getStart() && !pawn2InPlay.getStart()){
                     if (pawn1InPlay.getColor() == Model.Pawn.COLOR.RED) {
                         boardSquaresAllowedMovementForP2.add(squarePositions.get(activeIndex2 - 7));
 
@@ -978,7 +988,7 @@ public class GUI extends JFrame{
 
                     }
 
-                }else if (!pawn1InPlay.getHome() && pawn2InPlay.getHome()){
+                }else if (!pawn1InPlay.getStart() && pawn2InPlay.getStart()){
                     if (pawn1InPlay.getColor() == Model.Pawn.COLOR.RED) {
                         boardSquaresAllowedMovementForP1.add(squarePositions.get(activeIndex1 - 7));
 
@@ -987,15 +997,15 @@ public class GUI extends JFrame{
 
                     }
 
-                }else if (!pawn1InPlay.getHome() && !pawn2InPlay.getHome()) {
+                }else if (!pawn1InPlay.getStart() && !pawn2InPlay.getStart()) {
                     boardSquaresAllowedMovementForP1.add(squarePositions.get(activeIndex1-7));
                     boardSquaresAllowedMovementForP2.add(squarePositions.get(activeIndex2-7));
                 }
 
             } else if (numberCardInPlay.getNumber() == 8){
-                if (pawn1InPlay.getHome() && pawn2InPlay.getHome()){
+                if (pawn1InPlay.getStart() && pawn2InPlay.getStart()){
 
-                }else if(pawn1InPlay.getHome() && !pawn2InPlay.getHome()){
+                }else if(pawn1InPlay.getStart() && !pawn2InPlay.getStart()){
                     if (pawn1InPlay.getColor() == Model.Pawn.COLOR.RED) {
                         boardSquaresAllowedMovementForP2.add(squarePositions.get(activeIndex2 - 8));
 
@@ -1004,7 +1014,7 @@ public class GUI extends JFrame{
 
                     }
 
-                }else if (!pawn1InPlay.getHome() && pawn2InPlay.getHome()){
+                }else if (!pawn1InPlay.getStart() && pawn2InPlay.getStart()){
                     if (pawn1InPlay.getColor() == Model.Pawn.COLOR.RED) {
                         boardSquaresAllowedMovementForP1.add(squarePositions.get(activeIndex1 - 8));
 
@@ -1013,42 +1023,48 @@ public class GUI extends JFrame{
 
                     }
 
-                }else if (!pawn1InPlay.getHome() && !pawn2InPlay.getHome()) {
+                }else if (!pawn1InPlay.getStart() && !pawn2InPlay.getStart()) {
                     boardSquaresAllowedMovementForP1.add(squarePositions.get(activeIndex1-8));
                     boardSquaresAllowedMovementForP2.add(squarePositions.get(activeIndex2-8));
                 }
                 //TODO: OR CHOOSE A NEW CARD
 
             } else if (numberCardInPlay.getNumber() == 10){
-                if (pawn1InPlay.getHome() && pawn2InPlay.getHome()){
+                if (pawn1InPlay.getStart() && pawn2InPlay.getStart()){
 
-                }else if(pawn1InPlay.getHome() && !pawn2InPlay.getHome()){
+                }else if(pawn1InPlay.getStart() && !pawn2InPlay.getStart()){
                     if (pawn1InPlay.getColor() == Model.Pawn.COLOR.RED) {
                         boardSquaresAllowedMovementForP2.add(squarePositions.get(activeIndex2 - 10));
+                        boardSquaresAllowedMovementForP2.add(squarePositions.get(activeIndex2 + 1));
 
                     }else{
                         boardSquaresAllowedMovementForP2.add(squarePositions.get(activeIndex2-10));
+                        boardSquaresAllowedMovementForP2.add(squarePositions.get(activeIndex2+1));
 
                     }
 
-                }else if (!pawn1InPlay.getHome() && pawn2InPlay.getHome()){
+                }else if (!pawn1InPlay.getStart() && pawn2InPlay.getStart()){
                     if (pawn1InPlay.getColor() == Model.Pawn.COLOR.RED) {
                         boardSquaresAllowedMovementForP1.add(squarePositions.get(activeIndex1 - 10));
+                        boardSquaresAllowedMovementForP1.add(squarePositions.get(activeIndex1 +1));
 
                     }else{
                         boardSquaresAllowedMovementForP1.add(squarePositions.get(activeIndex1-10));
+                        boardSquaresAllowedMovementForP1.add(squarePositions.get(activeIndex1+1));
 
                     }
 
-                }else if (!pawn1InPlay.getHome() && !pawn2InPlay.getHome()) {
+                }else if (!pawn1InPlay.getStart() && !pawn2InPlay.getStart()) {
                     boardSquaresAllowedMovementForP1.add(squarePositions.get(activeIndex1-10));
+                    boardSquaresAllowedMovementForP1.add(squarePositions.get(activeIndex1+1));
                     boardSquaresAllowedMovementForP2.add(squarePositions.get(activeIndex2-10));
+                    boardSquaresAllowedMovementForP2.add(squarePositions.get(activeIndex2+1));
                 }
 
             } else if (numberCardInPlay.getNumber() == 11){
-                if (pawn1InPlay.getHome() && pawn2InPlay.getHome()){
+                if (pawn1InPlay.getStart() && pawn2InPlay.getStart()){
 
-                }else if(pawn1InPlay.getHome() && !pawn2InPlay.getHome()){
+                }else if(pawn1InPlay.getStart() && !pawn2InPlay.getStart()){
                     if (pawn1InPlay.getColor() == Model.Pawn.COLOR.RED) {
                         boardSquaresAllowedMovementForP2.add(squarePositions.get(activeIndex2 - 11));
 
@@ -1057,7 +1073,7 @@ public class GUI extends JFrame{
 
                     }
 
-                }else if (!pawn1InPlay.getHome() && pawn2InPlay.getHome()){
+                }else if (!pawn1InPlay.getStart() && pawn2InPlay.getStart()){
                     if (pawn1InPlay.getColor() == Model.Pawn.COLOR.RED) {
                         boardSquaresAllowedMovementForP1.add(squarePositions.get(activeIndex1 - 11));
 
@@ -1066,16 +1082,16 @@ public class GUI extends JFrame{
 
                     }
 
-                }else if (!pawn1InPlay.getHome() && !pawn2InPlay.getHome()) {
+                }else if (!pawn1InPlay.getStart() && !pawn2InPlay.getStart()) {
                     boardSquaresAllowedMovementForP1.add(squarePositions.get(activeIndex1-11));
                     boardSquaresAllowedMovementForP2.add(squarePositions.get(activeIndex2-11));
                 }
                 //TODO: OR SWAP PAWNS
 
             } else if (numberCardInPlay.getNumber() == 12){
-                if (pawn1InPlay.getHome() && pawn2InPlay.getHome()){
+                if (pawn1InPlay.getStart() && pawn2InPlay.getStart()){
 
-                }else if(pawn1InPlay.getHome() && !pawn2InPlay.getHome()){
+                }else if(pawn1InPlay.getStart() && !pawn2InPlay.getStart()){
                     if (pawn1InPlay.getColor() == Model.Pawn.COLOR.RED) {
                         boardSquaresAllowedMovementForP2.add(squarePositions.get(activeIndex2 - 12));
 
@@ -1084,7 +1100,7 @@ public class GUI extends JFrame{
 
                     }
 
-                }else if (!pawn1InPlay.getHome() && pawn2InPlay.getHome()){
+                }else if (!pawn1InPlay.getStart() && pawn2InPlay.getStart()){
                     if (pawn1InPlay.getColor() == Model.Pawn.COLOR.RED) {
                         boardSquaresAllowedMovementForP1.add(squarePositions.get(activeIndex1 - 12));
 
@@ -1093,18 +1109,21 @@ public class GUI extends JFrame{
 
                     }
 
-                }else if (!pawn1InPlay.getHome() && !pawn2InPlay.getHome()) {
+                }else if (!pawn1InPlay.getStart() && !pawn2InPlay.getStart()) {
                     boardSquaresAllowedMovementForP1.add(squarePositions.get(activeIndex1-12));
                     boardSquaresAllowedMovementForP2.add(squarePositions.get(activeIndex2-12));
                 }
                 //TODO: OR CHOOSE A NEW CARD
 
             } else if (numberCardInPlay.getNumber() == -1){
-                numberCardInPlay.getMovementRange();
+               if ((pawn1InPlay.getStart() || pawn1InPlay.getStart()) && (!enemyPawn2.getSafe() || !enemyPawn1.getSafe() ) ){
+
+               }
                 //TODO: CHOOSE A PAWN THAT IS LOCATED AT START AND MOVE IT TO A SQUARE OCCUPIED BY ANOTHER ENEMY PAWN
 
             }
         }
+
     }
 
     public ArrayList<Point> getBoardSquaresAllowedMovementForP1(){
@@ -1168,9 +1187,16 @@ public class GUI extends JFrame{
 
     private boolean canMove = true;
 
-
     public boolean canMove(){
         return canMove;
     }
+
+
+    public void canSwapPawnPositions(){
+        if (numberCardInPlay.getNumber() == -1){
+
+        }
+    }
+
 
 }

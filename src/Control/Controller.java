@@ -372,8 +372,16 @@ public class Controller {
     public void setPawn(){
         pawn1Red.setHome(true);
         pawn2Red.setHome(true);
-        pawn1Yellow.setHome(true);
-        pawn2Yellow.setHome(true);
+        pawn1Yellow.setHome(false);
+        pawn2Yellow.setHome(false);
+        pawn1Red.setSafe(true);
+        pawn2Red.setSafe(true);
+        pawn1Yellow.setSafe(true);
+        pawn2Yellow.setSafe(true);
+        pawn1Red.setStart(true);
+        pawn2Red.setStart(true);
+        pawn1Yellow.setStart(true);
+        pawn2Yellow.setStart(true);
     }
 
     public PlayerPawn getPawn1Red(){

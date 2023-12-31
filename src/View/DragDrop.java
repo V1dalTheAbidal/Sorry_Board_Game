@@ -1,6 +1,9 @@
 package View;
 
 import Model.Board.Square;
+import Model.Board.SquareSubClasses.SlideSquareSubClasses.EndSlideSquare;
+import Model.Board.SquareSubClasses.SlideSquareSubClasses.StartSlideSquare;
+import Model.Board.SquareSubClasses.StartSquare;
 
 import javax.swing.*;
 import java.awt.*;
@@ -107,10 +110,22 @@ public class DragDrop extends MouseAdapter{
                 size--;
             }
 
+            if (boardSquares.get(index) instanceof StartSlideSquare){
+                int endSlideIndex = findNearestEndSlideSquareIndex(index);
+
+                if (endSlideIndex != -1){
+                    Point endSlidePositions = allSquarePositions.get(endSlideIndex);
+
+                    activeLabel.setLocation(endSlidePositions);
+                }
+
+            }
+
             boardSquares.get(index).setOccupied(true);
             boardSquares.get(index).setOnSquare(gui.getPlayer());
             System.out.println("Index inside dragNdrop: " + index);
             gui.setActiveIndex1(index);
+            gui.getPawn1().setStart(false);
             gui.getPawn1().setHome(false);
         }
 
@@ -138,6 +153,7 @@ public class DragDrop extends MouseAdapter{
             boardSquares.get(index).setOnSquare(gui.getPlayer());
             gui.setActiveIndex2(index);
             gui.getPawn2().setHome(false);
+            gui.getPawn2().setStart(false);
         }
 
 
@@ -260,11 +276,23 @@ public class DragDrop extends MouseAdapter{
         return bounds.contains(mousePoint);
     }
 
-    public int findSquareIndex(Point squarePosition){
+    public int findNearestEndSlideSquareIndex(int startSlideIndex) {
+        ArrayList<Square> boardSquares = gui.getSquareOBJ();
 
+        // Loop from the startSlideIndex to find the nearest EndSlideSquare
+        for (int i = startSlideIndex; i < boardSquares.size(); i++) {
+            if (boardSquares.get(i) instanceof EndSlideSquare) {
+                return i;
+            }
+        }
 
-        return 0;
+        return -1;  // If not found, return an invalid index
     }
+    public void swapPawnPositions(){
+
+    }
+
+
 
 
 }
