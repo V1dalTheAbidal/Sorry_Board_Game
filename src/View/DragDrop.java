@@ -74,6 +74,16 @@ public class DragDrop extends MouseAdapter{
         int size= allSquarePositions.size() -1;
         int index = 0;
 
+        System.out.println("Is ArrayList for Pawn1 empty: " + sqrAllowedPositionsForP1.isEmpty());
+        System.out.println("Is ArrayList for Pawn2 empty: " + sqrAllowedPositionsForP2.isEmpty());
+        if (sqrAllowedPositionsForP1.isEmpty()){
+            activeLabel = labelToDrag2;
+        }
+
+        if (sqrAllowedPositionsForP2.isEmpty()){
+            activeLabel = labelToDrag1;
+        }
+
 
         if (activeLabel == labelToDrag1){
             index =0;
@@ -186,6 +196,7 @@ public class DragDrop extends MouseAdapter{
                 isDragging = true;
             } else {
                 JOptionPane.showMessageDialog(gui.frame, "Pawn 1 cannot be moved right now!");
+
             }
         } else if (isWithinBounds(e, labelToDrag2)) {
             // Pawn 2 is being clicked
