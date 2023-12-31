@@ -68,6 +68,8 @@ public class DragDrop extends MouseAdapter{
         Point nearestSquareForP1 = findNearestAllowedSquare(labelPosition, sqrAllowedPositionsForP1);
         Point nearestSquareForP2 = findNearestAllowedSquare(labelPosition, sqrAllowedPositionsForP2);
 
+
+
         ArrayList<Point> allSquarePositions = gui.getSquarePositions();
         int size= allSquarePositions.size() -1;
         int index = 0;
@@ -161,7 +163,6 @@ public class DragDrop extends MouseAdapter{
             return;
         }
 
-
         System.out.println("Label position: " + labelPosition1);
         System.out.println("Label position: " + labelPosition2);
         System.out.println("Mouse pressed at X: " + e.getX() + ", Y: " + e.getY());
@@ -171,19 +172,34 @@ public class DragDrop extends MouseAdapter{
         System.out.println("Label2 position Y: " + labelY2);
         System.out.println("Square size: " + squareSize);
 
-        if (isWithinBounds(e,labelToDrag1)){
-            activeLabel = labelToDrag1;
-            offsetX = e.getX() - (labelToDrag1.getX());
-            offsetY = e.getY() - (labelToDrag1.getY());
+        ArrayList<Point> allowedPositionsForP1 = gui.getBoardSquaresAllowedMovementForP1();
+        ArrayList<Point> allowedPositionsForP2 = gui.getBoardSquaresAllowedMovementForP2();
 
-            isDragging = true;
-        } else if (isWithinBounds(e,labelToDrag2)){
-            activeLabel = labelToDrag2;
-
-            offsetX = e.getX() - (labelToDrag2.getX());
-            offsetY = e.getY() - (labelToDrag2.getY());
-
-            isDragging = true;
+        // Determine which pawn the user is trying to move
+        if (isWithinBounds(e, labelToDrag1)) {
+            // Pawn 1 is being clicked
+            if (!allowedPositionsForP1.isEmpty()) {
+                // Pawn 1 can be moved
+                activeLabel = labelToDrag1;
+                offsetX = e.getX() - labelToDrag1.getX();
+                offsetY = e.getY() - labelToDrag1.getY();
+                isDragging = true;
+            } else {
+                JOptionPane.showMessageDialog(gui.frame, "Pawn 1 cannot be moved right now!");
+            }
+        } else if (isWithinBounds(e, labelToDrag2)) {
+            // Pawn 2 is being clicked
+            if (!allowedPositionsForP2.isEmpty()) {
+                // Pawn 2 can be moved
+                activeLabel = labelToDrag2;
+                offsetX = e.getX() - labelToDrag2.getX();
+                offsetY = e.getY() - labelToDrag2.getY();
+                isDragging = true;
+            } else {
+                JOptionPane.showMessageDialog(gui.frame, "Pawn 2 cannot be moved right now!");
+            }
+        }else{
+            JOptionPane.showMessageDialog(gui.frame, "You cannot move neither pawns till you draw 1 or 2!");
         }
     }
 

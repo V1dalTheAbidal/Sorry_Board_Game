@@ -126,6 +126,7 @@ public class GUI extends JFrame{
         pawn1ForDragNdrop = player1Pawn1;
         pawn2ForDragNdrop = player1Pawn2;
 
+
         dragNdropFunc();
 
 
@@ -783,6 +784,15 @@ public class GUI extends JFrame{
         ArrayList<Square> boardSquares = controller.getBoardSquares();
         System.out.println("IS Card in play? : " + isCardInPlay);
         if (isCardInPlay){
+            if (pawn1InPlay.getHome() && pawn2InPlay.getHome()){
+                if (numberCardInPlay.getNumber() != 1 && numberCardInPlay.getNumber() != 2){
+                    canMove = false;
+                }else{
+                    canMove = true;
+                }
+            }
+
+
             System.out.println("Active index1:"+ activeIndex1);
             System.out.println("Active index2:"+ activeIndex2);
             System.out.println("Is pawn1InPlay home? : " + pawn1InPlay.getHome());
@@ -1154,6 +1164,13 @@ public class GUI extends JFrame{
 
     public boolean isCardInPlay(){
         return isCardInPlay;
+    }
+
+    private boolean canMove = true;
+
+
+    public boolean canMove(){
+        return canMove;
     }
 
 }
