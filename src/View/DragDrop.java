@@ -1,5 +1,6 @@
 package View;
 
+import Model.Board.COLOR;
 import Model.Board.Square;
 import Model.Board.SquareSubClasses.SlideSquareSubClasses.EndSlideSquare;
 import Model.Board.SquareSubClasses.SlideSquareSubClasses.StartSlideSquare;
@@ -15,7 +16,7 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 /**
- *  @version 1.0
+ *  @version 2.0
  *  @Author V1dalTheAbidal
  */
 
@@ -38,9 +39,7 @@ public class DragDrop extends MouseAdapter{
      * <b>Constructor</b>: Constructs a new DragDrop
      * <b>Postcondition:</b> A new DragDrop has been created.
      */
-    DragDrop(){
 
-    }
     DragDrop(GUI gui, JLabel label1, JLabel label2){
         this.gui= gui;
         labelToDrag1 = gui.getLabel(label1);
@@ -111,6 +110,12 @@ public class DragDrop extends MouseAdapter{
             }
 
             if (boardSquares.get(index) instanceof StartSlideSquare){
+                if (boardSquares.get(index).getSquareColor() == COLOR.RED && gui.getPawn1().getColor() == Model.Pawn.COLOR.RED){
+                    return;
+                }else if ( boardSquares.get(index).getSquareColor() == COLOR.YELLOW && gui.getPawn1().getColor() == Model.Pawn.COLOR.YELLOW){
+                    return;
+                }
+
                 int endSlideIndex = findNearestEndSlideSquareIndex(index);
 
                 if (endSlideIndex != -1){
@@ -147,6 +152,23 @@ public class DragDrop extends MouseAdapter{
                     break;
                 }
                 size--;
+            }
+
+            if (boardSquares.get(index) instanceof StartSlideSquare){
+                if (boardSquares.get(index).getSquareColor() == COLOR.RED && gui.getPawn1().getColor() == Model.Pawn.COLOR.RED){
+                    return;
+                }else if ( boardSquares.get(index).getSquareColor() == COLOR.YELLOW && gui.getPawn1().getColor() == Model.Pawn.COLOR.YELLOW){
+                    return;
+                }
+
+                int endSlideIndex = findNearestEndSlideSquareIndex(index);
+
+                if (endSlideIndex != -1){
+                    Point endSlidePositions = allSquarePositions.get(endSlideIndex);
+
+                    activeLabel.setLocation(endSlidePositions);
+                }
+
             }
 
             boardSquares.get(index).setOccupied(true);
@@ -241,6 +263,11 @@ public class DragDrop extends MouseAdapter{
             activeLabel = null;
 
             //TODO CHECK IF MOVE IS VALID
+            //TODO CHECK IF CARD IS VALID
+            if (gui.isCardInPlay() && gui.getCardInPlayNumber() == 2){
+                gui.updateGameInfoForReDraw();
+
+            }
 
             if (gui.isCardInPlay()){
                 gui.updateGameInfo();
@@ -280,7 +307,7 @@ public class DragDrop extends MouseAdapter{
         ArrayList<Square> boardSquares = gui.getSquareOBJ();
 
         // Loop from the startSlideIndex to find the nearest EndSlideSquare
-        for (int i = startSlideIndex; i < boardSquares.size(); i++) {
+        for (int i = startSlideIndex; i < boardSquares.size(); i--) {
             if (boardSquares.get(i) instanceof EndSlideSquare) {
                 return i;
             }

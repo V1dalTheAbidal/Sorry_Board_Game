@@ -32,7 +32,7 @@ public class Deck {
      * <b>Postcondition:</b> The deck has been initialized.
      */
 
-
+/*
     public void initializeCards(){
         for (int i = 0; i < 4; i++){
             deck.add(new NumberOneCard());
@@ -54,11 +54,13 @@ public class Deck {
     }
 
 
+ */
 
 
 
 
-/*
+
+
     public void initializeCards(){
         for (int i = 0; i < 10; i++){
             deck.add(new NumberOneCard());
@@ -73,7 +75,7 @@ public class Deck {
 
 
 
- */
+
 
 
 

@@ -494,12 +494,14 @@ public class GUI extends JFrame{
                     x=x-51;
                     squarePositions.add(redEndSlide.getLocation());
                     Board.add(redEndSlide);
-                } else if (boardSquares.get(i) instanceof StartSlideSquare) {
+                    boardSquares.get(i).setSquareColor(COLOR.RED);
+                } else if (boardSquares.get(i) instanceof StartSlideSquare){
                     JLabel redStartSlide = new JLabel(new ImageIcon("src/Utlity/images/slides/redSlideStart.png"));
                     redStartSlide.setSize(51,50);
                     redStartSlide.setLocation(x-50,y-50);
                     x=x-51;
                     squarePositions.add(redStartSlide.getLocation());
+                    boardSquares.get(i).setSquareColor(COLOR.RED);
                     Board.add(redStartSlide);
                 }
             }else if(boardSquares.get(i).getSquareColor() == COLOR.YELLOW){
@@ -540,6 +542,7 @@ public class GUI extends JFrame{
                     x=x+51;
                     squarePositions.add(yellowEndSlide.getLocation());
                     Board.add(yellowEndSlide);
+                    boardSquares.get(i).setSquareColor(COLOR.YELLOW);
                 }else if(boardSquares.get(i) instanceof StartSlideSquare){
                     JLabel yellowStartSlide = new JLabel(new ImageIcon("src/Utlity/images/slides/yellowSlideStart.png"));
                     yellowStartSlide.setSize(51,50);
@@ -547,6 +550,7 @@ public class GUI extends JFrame{
                     x=x+51;
                     squarePositions.add(yellowStartSlide.getLocation());
                     Board.add(yellowStartSlide);
+                    boardSquares.get(i).setSquareColor(COLOR.YELLOW);
                 }
             }else if(boardSquares.get(i).getSquareColor() == COLOR.GREEN){
                 if (boardSquares.get(i) instanceof InternalSlideSquare){
@@ -563,6 +567,7 @@ public class GUI extends JFrame{
                     y=y+50;
                     squarePositions.add(greenStartSlide.getLocation());
                     Board.add(greenStartSlide);
+                    boardSquares.get(i).setSquareColor(COLOR.GREEN);
                 }else if (boardSquares.get(i) instanceof EndSlideSquare) {
                     JLabel greenEndSlide = new JLabel(new ImageIcon("src/Utlity/images/slides/greenSlideEnd.png"));
                     greenEndSlide.setSize(51,50);
@@ -570,6 +575,7 @@ public class GUI extends JFrame{
                     y=y+50;
                     squarePositions.add(greenEndSlide.getLocation());
                     Board.add(greenEndSlide);
+                    boardSquares.get(i).setSquareColor(COLOR.GREEN);
                 }
 
             }else if(boardSquares.get(i).getSquareColor() == COLOR.BLUE){
@@ -587,6 +593,7 @@ public class GUI extends JFrame{
                     blueStartSlide.setLocation(x,y-48);
                     squarePositions.add(blueStartSlide.getLocation());
                     Board.add(blueStartSlide);
+                    boardSquares.get(i).setSquareColor(COLOR.BLUE);
                 }else if (boardSquares.get(i) instanceof EndSlideSquare) {
                     JLabel blueEndSlide = new JLabel(new ImageIcon("src/Utlity/images/slides/blueSlideEnd.png"));
                     blueEndSlide.setSize(51,50);
@@ -594,6 +601,7 @@ public class GUI extends JFrame{
                     blueEndSlide.setLocation(x,y-48);
                     squarePositions.add(blueEndSlide.getLocation());
                     Board.add(blueEndSlide);
+                    boardSquares.get(i).setSquareColor(COLOR.BLUE);
                 }
             }else if(boardSquares.get(i).getSquareColor() == COLOR.WHITE){
                 JLabel whiteSquare = new JLabel(new ImageIcon("src/Utlity/images/whiteSquare.png"));
@@ -779,6 +787,16 @@ public class GUI extends JFrame{
         //TODO: Remove the card that is in play and wait for the player to draw a new card.
     }
 
+    public void updateGameInfoForReDraw(){
+        checkIfPlayerHasFinishedGUI();
+        cardsLeftInfo();
+        System.out.println("Player Playing Now: " + controller.getPlayerPlayingNow());
+        rightMenu.remove(CurrentCardDisplay);
+        frame.revalidate();
+        frame.repaint();
+        isCardInPlay= false;
+    }
+
     /**
      * <b>Transformer:</b> Main for running and testing my GUI
      * <b>Postcondition:</b> Runs the GUI
@@ -792,6 +810,10 @@ public class GUI extends JFrame{
 
     public void movement(){
         ArrayList<Square> boardSquares = controller.getBoardSquares();
+        //emptying the array list
+        boardSquaresAllowedMovementForP1.clear();
+        boardSquaresAllowedMovementForP2.clear();
+
         System.out.println("IS Card in play? : " + isCardInPlay);
         if (isCardInPlay){
             if (pawn1InPlay.getStart() && pawn2InPlay.getStart()){
@@ -805,8 +827,10 @@ public class GUI extends JFrame{
 
             System.out.println("Active index1:"+ activeIndex1);
             System.out.println("Active index2:"+ activeIndex2);
-            System.out.println("Is pawn1InPlay home? : " + pawn1InPlay.getStart());
-            System.out.println("Is pawn2InPlay home? : " + pawn2InPlay.getStart());
+            System.out.println("Is pawn1InPlay Start? : " + pawn1InPlay.getStart());
+            System.out.println("Is pawn2InPlay Start? : " + pawn2InPlay.getStart());
+            System.out.println("Pawn1InPLay Color : " + pawn1InPlay.getColor());
+            System.out.println("Pawn2InPLay Color : " + pawn2InPlay.getColor());
             if (numberCardInPlay.getNumber() == 1){
                 if (pawn1InPlay.getStart() && pawn2InPlay.getStart()){
                     if (pawn1InPlay.getColor() == Model.Pawn.COLOR.RED){
@@ -1196,6 +1220,10 @@ public class GUI extends JFrame{
         if (numberCardInPlay.getNumber() == -1){
 
         }
+    }
+
+    public int getCardInPlayNumber(){
+        return numberCardInPlay.getNumber();
     }
 
 

@@ -370,6 +370,12 @@ public class Controller {
     }
 
     public void setPawn(){
+        //setting the colors
+        pawn1Red.setColor(Model.Pawn.COLOR.RED);
+        pawn2Red.setColor(Model.Pawn.COLOR.RED);
+        pawn1Yellow.setColor(Model.Pawn.COLOR.YELLOW);
+        pawn2Yellow.setColor(Model.Pawn.COLOR.YELLOW);
+
         pawn1Red.setHome(true);
         pawn2Red.setHome(true);
         pawn1Yellow.setHome(false);
