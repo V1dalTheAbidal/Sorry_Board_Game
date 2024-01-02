@@ -145,8 +145,8 @@ public class DragDrop extends MouseAdapter{
 
             boardSquares.get(index).setOccupied(true);
             boardSquares.get(index).setOnSquare(gui.getPlayer());
-            System.out.println("Index inside dragNdrop: " + index);
             gui.setActiveIndex1(index);
+            System.out.println("Index inside dragNdrop for P1: " + index);
             gui.getPawn1().setStart(false);
             gui.getPawn1().setHome(false);
         }
@@ -209,6 +209,7 @@ public class DragDrop extends MouseAdapter{
             boardSquares.get(index).setOccupied(true);
             boardSquares.get(index).setOnSquare(gui.getPlayer());
             gui.setActiveIndex2(index);
+            System.out.println("Index inside dragNdrop for P2: " + index);
             gui.getPawn2().setHome(false);
             gui.getPawn2().setStart(false);
         }

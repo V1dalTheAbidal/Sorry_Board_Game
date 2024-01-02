@@ -703,20 +703,19 @@ public class GUI extends JFrame{
     }
 
     public void turn(){
-            System.out.println("Player playing now: " + controller.getPlayerPlayingNow());
+        System.out.println("Player playing now before: " + controller.getPlayerPlayingNow());
             controller.setTurn();
             playerPlayingInfo();
             updateActivePawnsForDragDrop();
+        System.out.println("Player playing now after: " + controller.getPlayerPlayingNow());
 
     }
     public void checkIfPlayerHasFinishedGUI(){
         if (isFoldButtonPressed /* or Check if player has moved */){
-            turn();
+
             isFoldButtonPressed = false;
         }else{
             controller.setPlayerFinished(false);
-            System.out.println(controller.getPlayerPlayingNow());
-
         }
 
     }
@@ -777,7 +776,6 @@ public class GUI extends JFrame{
         turn();
         playerPlayingInfo();
         cardsLeftInfo();
-        System.out.println("Player Playing Now: " + controller.getPlayerPlayingNow());
         updateActivePawnsForDragDrop();
         numberCardInPlay = null;
         rightMenu.remove(CurrentCardDisplay);
@@ -790,6 +788,7 @@ public class GUI extends JFrame{
     public void updateGameInfoForReDraw(){
         checkIfPlayerHasFinishedGUI();
         cardsLeftInfo();
+        updateActivePawnsForDragDrop();
         System.out.println("Player Playing Now: " + controller.getPlayerPlayingNow());
         rightMenu.remove(CurrentCardDisplay);
         frame.revalidate();

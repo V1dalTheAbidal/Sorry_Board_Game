@@ -80,11 +80,9 @@ public class Controller {
 
         if (this.fold == 0){
             this.fold++;
-            turn.setCurrentPlayer(players);
+
         }
-        else{
-            turn.setCurrentPlayer(players);
-        }
+
     }
 
     /**
