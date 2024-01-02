@@ -111,8 +111,23 @@ public class DragDrop extends MouseAdapter{
 
             if (boardSquares.get(index) instanceof StartSlideSquare){
                 if (boardSquares.get(index).getSquareColor() == COLOR.RED && gui.getPawn1().getColor() == Model.Pawn.COLOR.RED){
+
+
+                    boardSquares.get(index).setOccupied(true);
+                    boardSquares.get(index).setOnSquare(gui.getPlayer());
+                    System.out.println("Index inside dragNdrop: " + index);
+                    gui.setActiveIndex1(index);
+                    gui.getPawn1().setStart(false);
+                    gui.getPawn1().setHome(false);
                     return;
+
+
                 }else if ( boardSquares.get(index).getSquareColor() == COLOR.YELLOW && gui.getPawn1().getColor() == Model.Pawn.COLOR.YELLOW){
+                    boardSquares.get(index).setOccupied(true);
+                    boardSquares.get(index).setOnSquare(gui.getPlayer());
+                    gui.setActiveIndex1(index);
+
+
                     return;
                 }
 
@@ -120,7 +135,9 @@ public class DragDrop extends MouseAdapter{
 
                 if (endSlideIndex != -1){
                     Point endSlidePositions = allSquarePositions.get(endSlideIndex);
-
+                    boardSquares.get(endSlideIndex).setOccupied(true);
+                    boardSquares.get(endSlideIndex).setOnSquare(gui.getPlayer());
+                    gui.setActiveIndex1(endSlideIndex);
                     activeLabel.setLocation(endSlidePositions);
                 }
 
@@ -156,8 +173,24 @@ public class DragDrop extends MouseAdapter{
 
             if (boardSquares.get(index) instanceof StartSlideSquare){
                 if (boardSquares.get(index).getSquareColor() == COLOR.RED && gui.getPawn1().getColor() == Model.Pawn.COLOR.RED){
+
+
+                    boardSquares.get(index).setOccupied(true);
+                    boardSquares.get(index).setOnSquare(gui.getPlayer());
+                    gui.setActiveIndex2(index);
+                    gui.getPawn2().setHome(false);
+                    gui.getPawn2().setStart(false);
                     return;
+
+
                 }else if ( boardSquares.get(index).getSquareColor() == COLOR.YELLOW && gui.getPawn1().getColor() == Model.Pawn.COLOR.YELLOW){
+
+
+                    boardSquares.get(index).setOccupied(true);
+                    boardSquares.get(index).setOnSquare(gui.getPlayer());
+                    gui.setActiveIndex2(index);
+                    gui.getPawn2().setHome(false);
+                    gui.getPawn2().setStart(false);
                     return;
                 }
 
@@ -165,7 +198,9 @@ public class DragDrop extends MouseAdapter{
 
                 if (endSlideIndex != -1){
                     Point endSlidePositions = allSquarePositions.get(endSlideIndex);
-
+                    boardSquares.get(endSlideIndex).setOccupied(true);
+                    boardSquares.get(endSlideIndex).setOnSquare(gui.getPlayer());
+                    gui.setActiveIndex1(endSlideIndex);
                     activeLabel.setLocation(endSlidePositions);
                 }
 

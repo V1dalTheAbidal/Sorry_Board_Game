@@ -838,6 +838,7 @@ public class GUI extends JFrame{
                         boardSquaresAllowedMovementForP2.add(squarePositions.get(56));
 
 
+
                     }else{
                         boardSquaresAllowedMovementForP1.add(squarePositions.get(26));
                         boardSquaresAllowedMovementForP2.add(squarePositions.get(26));
@@ -846,6 +847,7 @@ public class GUI extends JFrame{
 
                 }else if(pawn1InPlay.getStart() && !pawn2InPlay.getStart()){
                     if (pawn1InPlay.getColor() == Model.Pawn.COLOR.RED) {
+                        System.out.println("HERE NIGGA 1");
                         boardSquaresAllowedMovementForP1.add(squarePositions.get(56));
                         boardSquaresAllowedMovementForP2.add(squarePositions.get(activeIndex2 - 1));
 
@@ -858,8 +860,9 @@ public class GUI extends JFrame{
 
                 }else if (!pawn1InPlay.getStart() && pawn2InPlay.getStart()){
                     if (pawn1InPlay.getColor() == Model.Pawn.COLOR.RED) {
+                        System.out.println("HERE NIGGA 2");
                         boardSquaresAllowedMovementForP2.add(squarePositions.get(56));
-                        boardSquaresAllowedMovementForP1.add(squarePositions.get(activeIndex2 - 1));
+                        boardSquaresAllowedMovementForP1.add(squarePositions.get(activeIndex1 - 1));
 
                     }else{
                         boardSquaresAllowedMovementForP2.add(squarePositions.get(26));
