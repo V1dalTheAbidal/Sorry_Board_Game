@@ -62,6 +62,8 @@ public class GUI extends JFrame{
     private boolean isFoldButtonPressed;
     private JLabel pawn1ForDragNdrop;
     private JLabel pawn2ForDragNdrop;
+    private JLabel enemyPawn1ForDragNdrop;
+    private JLabel enemyPawn2ForDragNdrop;
     private boolean isCardInPlay = false;
     private Card numberCardInPlay;
     private PlayerPawn pawn1InPlay;
@@ -72,9 +74,10 @@ public class GUI extends JFrame{
     private int P22index;
     private int activeIndex1;
     private int activeIndex2;
+    private int enemyIndex1;
+    private int enemyIndex2;
     private PlayerPawn enemyPawn1;
     private PlayerPawn enemyPawn2;
-
     DragDrop dragDrop;
 
 
@@ -725,11 +728,17 @@ public class GUI extends JFrame{
             pawn1ForDragNdrop = player1Pawn1;
             pawn2ForDragNdrop = player1Pawn2;
 
+            enemyPawn1ForDragNdrop = player2Pawn1;
+            enemyPawn2ForDragNdrop = player2Pawn2;
+
             pawn1InPlay = controller.getPawn1Red();
             pawn2InPlay = controller.getPawn2Red();
 
             activeIndex1 = P11index;
             activeIndex2 = P12index;
+
+            enemyIndex1 = P21index;
+            enemyIndex2 = P22index;
 
             enemyPawn1 = controller.getPawn1Yellow();
             enemyPawn2 = controller.getPawn2Yellow();
@@ -743,6 +752,9 @@ public class GUI extends JFrame{
 
             activeIndex1 = P21index;
             activeIndex2 = P22index;
+
+            enemyIndex1 = P11index;
+            enemyIndex2 = P12index;
 
             enemyPawn1 = controller.getPawn1Red();
             enemyPawn2 = controller.getPawn2Red();
@@ -1217,15 +1229,93 @@ public class GUI extends JFrame{
         return canMove;
     }
 
-
-    public void canSwapPawnPositions(){
-        if (numberCardInPlay.getNumber() == -1){
-
-        }
-    }
-
     public int getCardInPlayNumber(){
         return numberCardInPlay.getNumber();
+    }
+
+    public JLabel getEnemyPawn1Label(){
+        return enemyPawn1ForDragNdrop;
+    }
+
+    public JLabel getEnemyPawn2Label(){
+        return enemyPawn2ForDragNdrop;
+    }
+
+    public PlayerPawn getEnemyPawn1(){
+        return enemyPawn1;
+    }
+
+    public PlayerPawn getEnemyPawn2(){
+        return enemyPawn2;
+    }
+
+    public int getEnemyIndex1(){
+        return enemyIndex1;
+    }
+
+    public int getEnemyIndex2(){
+        return enemyIndex2;
+    }
+
+    public void setEnemyIndex1(int index){
+        enemyIndex1 = index;
+    }
+
+    public void setEnemyIndex2(int index){
+        enemyIndex2 = index;
+    }
+
+    public void swapPawnPositions(JLabel playerPawnLabel, JLabel enemyPawnLabel) {
+        System.out.println("Before Swap: Active Pawn Position: " + playerPawnLabel.getLocation() + ", Enemy Pawn Position: " + enemyPawnLabel.getLocation());
+
+        // Save original locations
+        Point playerOriginalLocation = dragDrop.getLastPositionBeforeSnap();
+        Point enemyOriginalLocation = enemyPawnLabel.getLocation();
+
+        // Swap locations
+        playerPawnLabel.setLocation(enemyOriginalLocation);
+        enemyPawnLabel.setLocation(playerOriginalLocation);
+
+        // Update indexes
+        updateIndexesAfterSwap(playerPawnLabel, enemyPawnLabel);
+
+        System.out.println("After Swap: Active Pawn Position: " + playerPawnLabel.getLocation() + ", Enemy Pawn Position: " + enemyPawnLabel.getLocation());
+
+        frame.revalidate();
+        frame.repaint();
+    }
+
+    private void updateIndexesAfterSwap(JLabel playerPawnLabel, JLabel enemyPawnLabel) {
+        int playerIndex = getIndexFromLabel(playerPawnLabel);
+        int enemyIndex = getIndexFromLabel(enemyPawnLabel);
+
+        setActiveIndexForLabel(playerPawnLabel, enemyIndex);
+        setActiveIndexForLabel(enemyPawnLabel, playerIndex);
+    }
+
+    public int getIndexFromLabel(JLabel label) {
+        if (label.equals(player1Pawn1)) {
+            return P11index;
+        } else if (label.equals(player1Pawn2)) {
+            return P12index;
+        } else if (label.equals(player2Pawn1)) {
+            return P21index;
+        } else if (label.equals(player2Pawn2)) {
+            return P22index;
+        }
+        return -1;
+    }
+
+    public void setActiveIndexForLabel(JLabel label, int index) {
+        if (label.equals(player1Pawn1)) {
+            P11index = index;
+        } else if (label.equals(player1Pawn2)) {
+            P12index = index;
+        } else if (label.equals(player2Pawn1)) {
+            P21index = index;
+        } else if (label.equals(player2Pawn2)) {
+            P22index = index;
+        }
     }
 
 
