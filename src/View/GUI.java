@@ -947,7 +947,7 @@ public class GUI extends JFrame{
                     boardSquaresAllowedMovementForP2.add(squarePositions.get(activeIndex2-3));
                 }
 
-            } else if (numberCardInPlay.getNumber() == 4){
+            } else if (numberCardInPlay.getNumber() == 4){//TODO: CANNOT MOVE IN TO SAFES SQUARES(HOME SQUARES) BACKWARDS ONLY FORWARDS!
                 if (pawn1InPlay.getStart() && pawn2InPlay.getStart()){
 
                 }else if(pawn1InPlay.getStart() && !pawn2InPlay.getStart()){

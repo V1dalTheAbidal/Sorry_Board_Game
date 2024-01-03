@@ -110,15 +110,13 @@ public class DragDrop extends MouseAdapter{
             }
 
             if (boardSquares.get(index) instanceof StartSlideSquare){
+                System.out.println("THIS IS AN INSTANCE OF STARTSLIDESQUARE");
                 if (boardSquares.get(index).getSquareColor() == COLOR.RED && gui.getPawn1().getColor() == Model.Pawn.COLOR.RED){
 
 
                     boardSquares.get(index).setOccupied(true);
                     boardSquares.get(index).setOnSquare(gui.getPlayer());
-                    System.out.println("Index inside dragNdrop: " + index);
                     gui.setActiveIndex1(index);
-                    gui.getPawn1().setStart(false);
-                    gui.getPawn1().setHome(false);
                     return;
 
 
@@ -178,8 +176,6 @@ public class DragDrop extends MouseAdapter{
                     boardSquares.get(index).setOccupied(true);
                     boardSquares.get(index).setOnSquare(gui.getPlayer());
                     gui.setActiveIndex2(index);
-                    gui.getPawn2().setHome(false);
-                    gui.getPawn2().setStart(false);
                     return;
 
 
@@ -189,8 +185,6 @@ public class DragDrop extends MouseAdapter{
                     boardSquares.get(index).setOccupied(true);
                     boardSquares.get(index).setOnSquare(gui.getPlayer());
                     gui.setActiveIndex2(index);
-                    gui.getPawn2().setHome(false);
-                    gui.getPawn2().setStart(false);
                     return;
                 }
 
@@ -247,14 +241,14 @@ public class DragDrop extends MouseAdapter{
             return;
         }
 
-        System.out.println("Label position: " + labelPosition1);
-        System.out.println("Label position: " + labelPosition2);
-        System.out.println("Mouse pressed at X: " + e.getX() + ", Y: " + e.getY());
-        System.out.println("Label1 position X: " + labelX1);
-        System.out.println("Label1 position Y: " + labelY1);
-        System.out.println("Label2 position X: " + labelX2);
-        System.out.println("Label2 position Y: " + labelY2);
-        System.out.println("Square size: " + squareSize);
+//        System.out.println("Label position: " + labelPosition1);
+//        System.out.println("Label position: " + labelPosition2);
+//        System.out.println("Mouse pressed at X: " + e.getX() + ", Y: " + e.getY());
+//        System.out.println("Label1 position X: " + labelX1);
+//        System.out.println("Label1 position Y: " + labelY1);
+//        System.out.println("Label2 position X: " + labelX2);
+//        System.out.println("Label2 position Y: " + labelY2);
+//        System.out.println("Square size: " + squareSize);
 
         ArrayList<Point> allowedPositionsForP1 = gui.getBoardSquaresAllowedMovementForP1();
         ArrayList<Point> allowedPositionsForP2 = gui.getBoardSquaresAllowedMovementForP2();
