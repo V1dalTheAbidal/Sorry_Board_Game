@@ -1266,7 +1266,14 @@ public class GUI extends JFrame{
     }
 
     public void swapPawnPositions(JLabel playerPawnLabel, JLabel enemyPawnLabel) {
-        System.out.println("Before Swap: Active Pawn Position: " + playerPawnLabel.getLocation() + ", Enemy Pawn Position: " + enemyPawnLabel.getLocation());
+        System.out.println("1Before Swap: Active Pawn Position: " + playerPawnLabel.getLocation() + ", Enemy Pawn Position: " + enemyPawnLabel.getLocation());
+        System.out.println("2Before Swap lastLocationBeforeSnap:  " + dragDrop.getLastPositionBeforeSnap() + ", Enemy Pawn Index: " + getIndexFromLabel(enemyPawnLabel));
+
+        if (playerPawnLabel == enemyPawnLabel) {
+            System.out.println("Attempted to swap pawn with itself, which is not allowed.");
+            return;
+        }
+
 
         // Save original locations
         Point playerOriginalLocation = dragDrop.getLastPositionBeforeSnap();

@@ -289,6 +289,8 @@ public class DragDrop extends MouseAdapter {
             JOptionPane.showMessageDialog(gui.frame, "You cannot move neither pawns till you draw 1 or 2!");
         }
 
+        System.out.println("Active label position: " + activeLabel.getLocation());
+
         if (activeLabel != null) {
             lastPositionBeforeSnap = activeLabel.getLocation();
         }
@@ -308,6 +310,7 @@ public class DragDrop extends MouseAdapter {
 
     public void mouseReleased(MouseEvent e) {
             if(isDragging && activeLabel != null){
+                System.out.println("Active label position: " + activeLabel.getLocation());
                 System.out.println("Last position before snap: " + lastPositionBeforeSnap);
                 snapToTile();
                 System.out.println("Active label location: " + activeLabel.getLocation());
@@ -340,6 +343,11 @@ public class DragDrop extends MouseAdapter {
                     activeLabel = null;
                 }
 
+                System.out.println("ENEMY COLOR INSIDE CLICKED: "+ gui.getEnemyPawn1().getColor());
+                System.out.println("PLAYER COLOR INSIDE CLICKED: " + gui.getPawn1().getColor());
+                System.out.println("ENEMY POSITION INSIDE CLICKED: "+ gui.getEnemyPawn1Label().getLocation());
+                System.out.println("PLAYER POSITION INSIDE CLICKED: " + activeLabel.getLocation());
+
                 if (newPosition.equals(gui.getEnemyPawn1Label().getLocation())) {
                     System.out.println("SWAPPING PAWNS NIGAAAAAAAAAAAAA1");
                     swapPawnPositions(activeLabel, gui.getEnemyPawn1Label());
@@ -347,6 +355,8 @@ public class DragDrop extends MouseAdapter {
                     System.out.println("SWAPPING PAWNS NIGAAAAAAAAAAAAA2");
                     swapPawnPositions(activeLabel, gui.getEnemyPawn2Label());
                 }
+
+
 
                 isDragging = false;
                 activeLabel = null;
@@ -403,65 +413,26 @@ public class DragDrop extends MouseAdapter {
         return -1;  // If not found, return an invalid index
     }
 
-    /*
-    public void swapPawnPositions(JLabel ActiveLabel, JLabel enemyPawnToSwapWith){
-
-
-
-
-        int indexToGetSwapped1 = gui.getEnemyIndex1();
-        int indexToGetSwapped2 = gui.getEnemyIndex2();
-
-        if (this.activeLabel == labelToDrag1) {
-            int indexForSwap = gui.getActiveIndex1();
-
-            if (!gui.getEnemyPawn1().getSafe() || !gui.getEnemyPawn2().getSafe()) {
-                if (!gui.getPawn1().getSafe()){
-                    activeLabel.setLocation(gui.getSquarePositions().get(indexToGetSwapped1));
-                    gui.getEnemyPawn1Label().setLocation(gui.getSquarePositions().get(indexForSwap));
-                    gui.setActiveIndex1(indexToGetSwapped1);
-                    gui.setEnemyIndex1(indexForSwap);
-                } else if (!gui.getPawn2().getSafe()) {
-                    activeLabel.setLocation(gui.getSquarePositions().get(indexToGetSwapped2));
-                    gui.getEnemyPawn2Label().setLocation(gui.getSquarePositions().get(indexForSwap));
-                    gui.setActiveIndex1(indexToGetSwapped2);
-                    gui.setEnemyIndex2(indexForSwap);
-                }
-            } else if (gui.getEnemyPawn1().getSafe() && gui.getEnemyPawn2().getSafe()) {
-                JOptionPane.showMessageDialog(gui.frame, "You cannot swap positions with a safe pawn!");
-                return;
-            }
-
-
-        } else {
-            int indexForSwap = gui.getActiveIndex2();
-            if (!gui.getEnemyPawn1().getSafe() || !gui.getEnemyPawn2().getSafe()) {
-                if (!gui.getPawn1().getSafe()) {
-                    activeLabel.setLocation(gui.getSquarePositions().get(indexToGetSwapped1));
-                    gui.getEnemyPawn1Label().setLocation(gui.getSquarePositions().get(indexForSwap));
-                    gui.setActiveIndex2(indexToGetSwapped1);
-                    gui.setEnemyIndex1(indexForSwap);
-                } else if (!gui.getPawn2().getSafe()) {
-                    activeLabel.setLocation(gui.getSquarePositions().get(indexToGetSwapped2));
-                    gui.getEnemyPawn2Label().setLocation(gui.getSquarePositions().get(indexForSwap));
-                    gui.setActiveIndex2(indexToGetSwapped2);
-                    gui.setEnemyIndex2(indexForSwap);
-                }
-
-            } else if (gui.getEnemyPawn1().getSafe() && gui.getEnemyPawn2().getSafe()) {
-                JOptionPane.showMessageDialog(gui.frame, "You cannot swap positions with a safe pawn!");
-                return;
-            }
-
-
-        }
-    }
-
-
-     */
 
     public void swapPawnPositions(JLabel activeLabel, JLabel enemyPawnToSwapWith) {
-        if (canSwapWithEnemyPawn(activeLabel, enemyPawnToSwapWith)) {
+
+
+
+        if (canSwapWithEnemyPawn(activeLabel, enemyPawnToSwapWith)){
+            if (activeLabel == labelToDrag1){
+                System.out.println("active label color: " + gui.getPawn1().getColor());
+            }else if (activeLabel == labelToDrag2){
+                System.out.println("active label color: " + gui.getPawn2().getColor());
+            }
+
+            if (enemyPawnToSwapWith == gui.getEnemyPawn1Label()) {
+                System.out.println("enemy label color: " + gui.getEnemyPawn1().getColor());
+            }else if (enemyPawnToSwapWith == gui.getEnemyPawn2Label()){
+                System.out.println("enemy label color: " + gui.getEnemyPawn2().getColor());
+            }else{
+                System.out.println("Something wrong here");
+            }
+
             gui.swapPawnPositions(activeLabel, enemyPawnToSwapWith);
         } else {
             JOptionPane.showMessageDialog(gui.frame, "You cannot swap positions with a safe pawn!");
@@ -471,7 +442,6 @@ public class DragDrop extends MouseAdapter {
     private boolean canSwapWithEnemyPawn(JLabel playerPawn, JLabel enemyPawn) {
         return true;
     }
-
 
 }
 
