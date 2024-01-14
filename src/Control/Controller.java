@@ -21,7 +21,7 @@ import java.util.ArrayList;
 import java.util.IllegalFormatCodePointException;
 
 /**
- * @version 1.0
+ * @version 2.0
  * @Author V1dalTheAbidal
  */
 
@@ -44,6 +44,7 @@ public class Controller {
     private PlayerPawn pawn2Red = new PlayerPawn(0, Model.Pawn.COLOR.RED);
     private PlayerPawn pawn1Yellow = new PlayerPawn(0, Model.Pawn.COLOR.YELLOW);
     private PlayerPawn pawn2Yellow = new PlayerPawn(0, Model.Pawn.COLOR.YELLOW);
+
     /**
      * <b>Constructor:</b> Creates a new Controller
      * <b>Postcondition:</b> A new Controller has been created
@@ -85,36 +86,6 @@ public class Controller {
 
     }
 
-    /**
-     * <b>transformer(mutative)</b>: sets the variable  to true
-     * <b>Postcondition:</b>  sets the variable hasStarted to true
-     *
-     */
-
-    public void setHasStarted() {
-        this.hasStarted = true;
-    }
-
-    /**
-     * <b>Accessor:</b> returns the variable hasStarted
-     * <b>Postcondition:</b> the variable hasStarted has been returned
-     * @return the variable hasStarted
-     */
-
-    public boolean hasNotStarted() {
-        return !hasStarted;
-    }
-
-    /**
-     * <b>Observer:</b> returns true if the game has finished
-     * <b>Postcondition:</b> returns true if the game is finished otherwise false
-     * @return true or false depending on whether the game has finished or not
-     */
-
-    public boolean gameHasFinished(){
-
-        return false;
-    }
 
     /**
      * <b>Transformer:</b> sets the turn for the player playing
@@ -128,25 +99,6 @@ public class Controller {
     }
 
     /**
-     * <b>Accessor:</b> sets the numbers of players playing
-     * <b>Postcondition:</b> the players playing has been set
-     *
-     */
-    public void setPlayersPlaying(int playersPlaying){
-        this.playersPlaying = playersPlaying;
-    }
-
-    /**
-     * <b>Accessor:</b> returns the number of players playing
-     * <b>Postcondition:</b> the number of players playing has been returned
-     * @return the number of players playing
-     */
-
-    public int getPlayersPlaying(){
-        return this.playersPlaying;
-    }
-
-    /**
      * <b>Accessor:</b> returns the Board Squares
      * <b>Postcondition:</b> the Board Squares has been returned
      * @return board squares
@@ -155,27 +107,15 @@ public class Controller {
         return this.boardSquares;
     }
 
-    /**
-     * <b>Transformer:</b> sets the Board Squares
-     * <b>Postcondition:</b> the Board Squares has been set
-     * @param boardSquares
-     */
-    public void setBoardSquares(ArrayList<Square> boardSquares){
-        this.boardSquares = boardSquares;
-    }
-
-
 
     /**
      * <b>Transformer:</b> Initialize the main board squares of the game(excluding the safe squares and the home squares and the start squares)
      * <b>Postcondition:</b> the Board Squares has been initialized
      *
      */
-
     public void initializeBoardSquares(){
         for (int i = 0; i < 64; i++){
-
-            //adding white squares all around the board                                                                                                                                     starting red here
+            //adding white squares all around the board
             if(i < 2 || (i > 6 && i < 11) || (i == 15 )|| (i==16) || (i > 21 && i < 26) || (i == 31) || (i == 32) || (i > 37 && i < 42) || (i == 46) || (i == 47) || (i > 52 && i < 57)){
                 boardSquares.add(new Square(COLOR.WHITE));
 
@@ -187,74 +127,55 @@ public class Controller {
                     boardSquares.add(new EndSlideSquare(COLOR.GREEN));
                 } else if (i == 6 || i == 14) {
                     boardSquares.add(new StartSlideSquare(COLOR.GREEN));
-
                 }else{
                     boardSquares.add(new InternalSlideSquare(COLOR.GREEN));
-
                 }
-
             }
 
             //adding yellow slide squares horizontally on the bottom side
             if(i>16 && i<22 || i>26 && i<31){
                 if (i == 17 || i == 27){
                     boardSquares.add(new EndSlideSquare(COLOR.YELLOW));
-
                 } else if (i == 21 || i == 30) {
                     boardSquares.add(new StartSlideSquare(COLOR.YELLOW));
-
                 }else{
                   boardSquares.add(new InternalSlideSquare(COLOR.YELLOW));
-
                 }
-
-
             }
 
             //adding blue squares vertically on the right side
             if(i>32 && i<38 || i>40 && i<45){
                 if (i == 33 || i == 41){
                     boardSquares.add(new EndSlideSquare(COLOR.BLUE));
-
                 } else if (i == 37 || i == 44) {
                     boardSquares.add(new StartSlideSquare(COLOR.BLUE));
-
                 }else{
                     boardSquares.add(new InternalSlideSquare(COLOR.BLUE));
-
                 }
-
             }
 
             //adding red slide squares horizontally on the top side
             if(i>46 && i<52 || i>57 && i<62){
                 if (i == 47 || i == 58){
                     boardSquares.add(new EndSlideSquare(COLOR.RED));
-
                 } else if (i == 51 || i == 61) {
                     boardSquares.add(new StartSlideSquare(COLOR.RED));
-
                 }else{
                     boardSquares.add(new InternalSlideSquare(COLOR.RED));
-
                 }
-
             }
         }
 
         for (int i=0; i<11; i++){
             if(i<5){
                 boardSquares.add(new SafetyZoneSquare(COLOR.RED));
-
             }else if(i>4 && i<10){
                 boardSquares.add(new SafetyZoneSquare(COLOR.YELLOW));
-
             }else if(i==10){
                 boardSquares.add(new HomeSquare(COLOR.YELLOW));
                 boardSquares.add(new StartSquare(COLOR.YELLOW));
                 boardSquares.add(new StartSquare(COLOR.RED));
                 boardSquares.add(new HomeSquare(COLOR.RED));
-
             }
         }
     }
@@ -264,7 +185,6 @@ public class Controller {
         while(size <= 0){
             boardSquares.get(size).setOccupied(false);
             size--;
-
         }
     }
 
@@ -285,97 +205,58 @@ public class Controller {
      * @return card that's currently active for play
      */
     public Card drawCard(){
-
         return cardsLeftToPlay.get(0);
-
     }
 
     /**
-     * <b>Transformer:</b> set some things about the card Sorry
-     * <b>Postcondition:</b> the cards sorry has been set
+     * <b>Transformer:</b> sets the players statue to finished
+     * <b>Postcondition:</b> the players statue has been set to finished
+     * @param finished
      *
      */
-    public void setSorryCardPlayed(){
-
-    }
-
-    public void endTurn(){
-        int i = turn.getCurrentPlayer();
-        if (players.get(i).isFinished()){
-            setTurn();//sets the next turn
-        }
-        else{
-            //kane kati
-        }
-
-    }
-
     public void setPlayerFinished(boolean finished){
         int i = turn.getCurrentPlayer();
         players.get(i).setFinished(finished);
     }
 
-    public void setPlayerHasPlayed(){
-        int i = turn.getCurrentPlayer();
-        players.get(i).setHasPlayed(true);
-    }
 
-    public void setPlayerHasNotPlayed(){
-        int i = turn.getCurrentPlayer();
-        players.get(i).setHasPlayed(false);
-    }
-
-    public boolean checkIfPlayerHasPlayed(){
-        int i = turn.getCurrentPlayer();
-        return players.get(i).isHasPlayed();
-    }
-
-    public boolean checkIfPlayerHasFinished(){
-        int i = turn.getCurrentPlayer();
-        return players.get(i).isFinished();
-    }
-
-    public void setPlayerHasNotFinished(){
-        int i = turn.getCurrentPlayer();
-        players.get(i).setFinished(false);
-    }
-
-    public void setPlayerHasNotFinished(int i){
-        players.get(i).setFinished(false);
-    }
-    public void setPlayerHasFinished(int i){
-        players.get(i).setFinished(true);
-    }
-
-    public void setPlayersTurn(int i) {
-       turn.setCurrentPlayer(players);
-    }
-
+    /**
+     * <b>Accessor:</b> returns the player playing now
+     * <b>Postcondition:</b> the players playing now has been returned
+     */
     public int getPlayerPlayingNow() {
        return turn.getCurrentPlayer();
     }
+
+    /**
+     * <b>Accessor:</b> returns the deck size
+     * <b>Postcondition:</b> the deck size has been returned
+     */
     public int getDeckSize(){
        return cardsLeftToPlay.size();
     }
-    public boolean getPlayerHasFinished(){
-        int i = turn.getCurrentPlayer();
-        return players.get(i).isFinished();
-    }
 
+    /**
+     * <b>Transformer:</b> Creates a new deck
+     * <b>Postcondition:</b> A new deck has been created
+     */
     public void createNewDeck(){
         allCards.initializeCards();
         cardsLeftToPlay = allCards.getCards();
     }
 
+    /**
+     * <b>Transformer:</b> Set some pawn initial values
+     * <b>Postcondition:</b> Pawns has been set
+     */
     public void setPawn(){
         //setting the colors
         pawn1Red.setColor(Model.Pawn.COLOR.RED);
         pawn2Red.setColor(Model.Pawn.COLOR.RED);
         pawn1Yellow.setColor(Model.Pawn.COLOR.YELLOW);
         pawn2Yellow.setColor(Model.Pawn.COLOR.YELLOW);
-
-        pawn1Red.setHome(true);
-        pawn2Red.setHome(true);
+        pawn1Red.setHome(false);
+        pawn2Red.setHome(false);
         pawn1Yellow.setHome(false);
         pawn2Yellow.setHome(false);
         pawn1Red.setSafe(true);
@@ -388,42 +269,50 @@ public class Controller {
         pawn2Yellow.setStart(true);
     }
 
+    /**
+     * <b>Accessor:</b> Accesses the pawn 1 with red color
+     * <b>Postcondition:</b> the red pawn 1 has been returned
+     */
     public PlayerPawn getPawn1Red(){
         return pawn1Red;
     }
 
+    /**
+     * <b>Accessor:</b> Accesses the pawn 2 with red color
+     * <b>Postcondition:</b> the red pawn 2 has been returned
+     */
     public PlayerPawn getPawn2Red(){
         return pawn2Red;
     }
 
+    /**
+     * <b>Accessor:</b> Accesses the pawn 1 with yellow color
+     * <b>Postcondition:</b> the yellow pawn 1 has been returned
+     */
     public PlayerPawn getPawn1Yellow(){
         return pawn1Yellow;
     }
 
+    /**
+     * <b>Accessor:</b> Accesses the pawn 2 with yellow color
+     * <b>Postcondition:</b> the yellow pawn 2 has been returned
+     */
     public PlayerPawn getPawn2Yellow(){
         return pawn2Yellow;
     }
 
-    public Model.Pawn.COLOR getPawn1RedColor(){
-        return pawn1Red.getColor();
-    }
-
-    public Model.Pawn.COLOR getPawn2RedColor(){
-        return pawn2Red.getColor();
-    }
-
-    public Model.Pawn.COLOR getPawn1YellowColor(){
-        return pawn1Yellow.getColor();
-    }
-
-    public Model.Pawn.COLOR getPawn2YellowColor(){
-        return pawn2Yellow.getColor();
-    }
-
+    /**
+     * <b>Accessor:</b> Accesses the player 1(red)
+     * <b>Postcondition:</b> returned the player 1
+     */
     public Model.Player.Player getP1() {
         return P1;
     }
 
+    /**
+     * <b>Accessor:</b> Accesses the player 2(yellow)
+     * <b>Postcondition:</b> returned the player 2
+     */
     public Model.Player.Player getP2() {
         return P2;
     }

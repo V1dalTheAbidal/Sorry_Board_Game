@@ -32,7 +32,6 @@ public class Deck {
      * <b>Postcondition:</b> The deck has been initialized.
      */
 
-
     public void initializeCards(){
         for (int i = 0; i < 4; i++){
             deck.add(new NumberOneCard());
@@ -47,39 +46,8 @@ public class Deck {
             deck.add(new SimpleNumberCard(12));
             deck.add(new SorryCard());
         }
-
-
         Collections.shuffle(deck);
-        System.out.println("Deck size: " + deck.size());
     }
-
-
-
-
-
-
-
-
-/*
-    public void initializeCards(){
-        for (int i = 0; i < 10; i++){
-            deck.add(new NumberOneCard());
-
-        }
-
-
-        Collections.shuffle(deck);
-        System.out.println("Deck size: " + deck.size());
-    }
-
-
- */
-
-
-
-
-
-
 
     /**
      * <b>Observer:</b> Sees if the deck is empty.

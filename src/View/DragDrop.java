@@ -50,6 +50,7 @@ public class DragDrop extends MouseAdapter {
         labelY1 = labelPosition1.getY();
         labelX2 = labelPosition2.getX();
         labelY2 = labelPosition2.getY();
+
     }
 
 
@@ -63,20 +64,16 @@ public class DragDrop extends MouseAdapter {
         }
 
         ArrayList<Square> boardSquares = gui.getSquareOBJ();
-        //ArrayList<Point> sqrPositions = gui.getSquarePositions();
         ArrayList<Point> sqrAllowedPositionsForP1 = gui.getBoardSquaresAllowedMovementForP1();
         ArrayList<Point> sqrAllowedPositionsForP2 = gui.getBoardSquaresAllowedMovementForP2();
+        ArrayList<Point> allSquarePositions = gui.getSquarePositions();
         Point labelPosition = activeLabel.getLocation(); // Get the current position of the active label
         Point nearestSquareForP1 = findNearestAllowedSquare(labelPosition, sqrAllowedPositionsForP1);
         Point nearestSquareForP2 = findNearestAllowedSquare(labelPosition, sqrAllowedPositionsForP2);
 
-
-        ArrayList<Point> allSquarePositions = gui.getSquarePositions();
         int size = allSquarePositions.size() - 1;
         int index = 0;
 
-        System.out.println("Is ArrayList for Pawn1 empty: " + sqrAllowedPositionsForP1.isEmpty());
-        System.out.println("Is ArrayList for Pawn2 empty: " + sqrAllowedPositionsForP2.isEmpty());
         if (sqrAllowedPositionsForP1.isEmpty()) {
             activeLabel = labelToDrag2;
         }
@@ -85,21 +82,15 @@ public class DragDrop extends MouseAdapter {
             activeLabel = labelToDrag1;
         }
 
-
         if (activeLabel == labelToDrag1) {
             index = 0;
-
             if (nearestSquareForP1 != null) {
                 // Calculate the new position for the label to be centered on the nearest square
                 int newX = (int) (nearestSquareForP1.x + (squareSize - activeLabel.getWidth()) / 2);
                 int newY = (int) (nearestSquareForP1.y + (squareSize - activeLabel.getHeight()) / 2);
 
-
-
                 // Set the new position of the active label
                 activeLabel.setLocation(newX, newY);
-
-
             }
 
             while (size >= 0) {
@@ -111,22 +102,15 @@ public class DragDrop extends MouseAdapter {
             }
 
             if (boardSquares.get(index) instanceof StartSlideSquare) {
-                System.out.println("THIS IS AN INSTANCE OF STARTSLIDESQUARE");
                 if (boardSquares.get(index).getSquareColor() == COLOR.RED && gui.getPawn1().getColor() == Model.Pawn.COLOR.RED) {
-
-
                     boardSquares.get(index).setOccupied(true);
                     boardSquares.get(index).setOnSquare(gui.getPlayer());
                     gui.setActiveIndex1(index);
                     return;
-
-
                 } else if (boardSquares.get(index).getSquareColor() == COLOR.YELLOW && gui.getPawn1().getColor() == Model.Pawn.COLOR.YELLOW) {
                     boardSquares.get(index).setOccupied(true);
                     boardSquares.get(index).setOnSquare(gui.getPlayer());
                     gui.setActiveIndex1(index);
-
-
                     return;
                 }
 
@@ -142,15 +126,9 @@ public class DragDrop extends MouseAdapter {
                 }
             }
 
-
-
-
-
-
             boardSquares.get(index).setOccupied(true);
             boardSquares.get(index).setOnSquare(gui.getPlayer());
             gui.setActiveIndex1(index);
-            System.out.println("Index inside dragNdrop for P1: " + index);
             gui.getPawn1().setStart(false);
             gui.getPawn1().setHome(false);
         }
@@ -161,10 +139,8 @@ public class DragDrop extends MouseAdapter {
                 // Calculate the new position for the label to be centered on the nearest square
                 int newX = (int) (nearestSquareForP2.x + (squareSize - activeLabel.getWidth()) / 2);
                 int newY = (int) (nearestSquareForP2.y + (squareSize - activeLabel.getHeight()) / 2);
-
                 // Set the new position of the active label
                 activeLabel.setLocation(newX, newY);
-
             }
 
             while (size >= 0) {
@@ -177,17 +153,11 @@ public class DragDrop extends MouseAdapter {
 
             if (boardSquares.get(index) instanceof StartSlideSquare) {
                 if (boardSquares.get(index).getSquareColor() == COLOR.RED && gui.getPawn1().getColor() == Model.Pawn.COLOR.RED) {
-
-
                     boardSquares.get(index).setOccupied(true);
                     boardSquares.get(index).setOnSquare(gui.getPlayer());
                     gui.setActiveIndex2(index);
                     return;
-
-
                 } else if (boardSquares.get(index).getSquareColor() == COLOR.YELLOW && gui.getPawn1().getColor() == Model.Pawn.COLOR.YELLOW) {
-
-
                     boardSquares.get(index).setOccupied(true);
                     boardSquares.get(index).setOnSquare(gui.getPlayer());
                     gui.setActiveIndex2(index);
@@ -195,7 +165,6 @@ public class DragDrop extends MouseAdapter {
                 }
 
                 int endSlideIndex = findNearestEndSlideSquareIndex(index);
-
                 if (endSlideIndex != -1) {
                     Point endSlidePositions = allSquarePositions.get(endSlideIndex);
                     boardSquares.get(endSlideIndex).setOccupied(true);
@@ -203,7 +172,6 @@ public class DragDrop extends MouseAdapter {
                     gui.setActiveIndex1(endSlideIndex);
                     activeLabel.setLocation(endSlidePositions);
                 }
-
             }
 
             boardSquares.get(index).setOccupied(true);
@@ -214,13 +182,18 @@ public class DragDrop extends MouseAdapter {
             gui.getPawn2().setStart(false);
         }
 
-
         // Repaint the GUI
         gui.frame.revalidate();
         gui.frame.repaint();
     }
 
-
+    /**
+     * <b>Transformer:</b> Finds the nearest allowed square
+     * <b>Postcondition:</b> The nearest allowed square has been found
+     * @param labelPosition The position of the label
+     * @param allowedPositions The allowed positions
+     * @return The nearest allowed square
+     */
     private Point findNearestAllowedSquare(Point labelPosition, ArrayList<Point> allowedPositions) {
         double minDistance = Double.MAX_VALUE;
         Point nearestSquare = null;
@@ -232,7 +205,6 @@ public class DragDrop extends MouseAdapter {
                 nearestSquare = square;
             }
         }
-
         return nearestSquare;
     }
 
@@ -241,7 +213,6 @@ public class DragDrop extends MouseAdapter {
      * <b>Postcondition:</b> returns true if the label is dragged otherwise false
      */
 
-
     public void mousePressed(MouseEvent e) {
         if (!gui.isCardInPlay()) {
             // If no card is in play, prevent pawn movement
@@ -249,18 +220,8 @@ public class DragDrop extends MouseAdapter {
             return;
         }
 
-//        System.out.println("Label position: " + labelPosition1);
-//        System.out.println("Label position: " + labelPosition2);
-//        System.out.println("Mouse pressed at X: " + e.getX() + ", Y: " + e.getY());
-//        System.out.println("Label1 position X: " + labelX1);
-//        System.out.println("Label1 position Y: " + labelY1);
-//        System.out.println("Label2 position X: " + labelX2);
-//        System.out.println("Label2 position Y: " + labelY2);
-//        System.out.println("Square size: " + squareSize);
-
         ArrayList<Point> allowedPositionsForP1 = gui.getBoardSquaresAllowedMovementForP1();
         ArrayList<Point> allowedPositionsForP2 = gui.getBoardSquaresAllowedMovementForP2();
-
         // Determine which pawn the user is trying to move
         if (isWithinBounds(e, labelToDrag1)) {
             // Pawn 1 is being clicked
@@ -272,7 +233,6 @@ public class DragDrop extends MouseAdapter {
                 isDragging = true;
             } else {
                 JOptionPane.showMessageDialog(gui.frame, "Pawn 1 cannot be moved right now!");
-
             }
         } else if (isWithinBounds(e, labelToDrag2)) {
             // Pawn 2 is being clicked
@@ -289,8 +249,6 @@ public class DragDrop extends MouseAdapter {
             JOptionPane.showMessageDialog(gui.frame, "You cannot move neither pawns till you draw 1 or 2!");
         }
 
-        System.out.println("Active label position: " + activeLabel.getLocation());
-
         if (activeLabel != null) {
             lastPositionBeforeSnap = activeLabel.getLocation();
         }
@@ -303,24 +261,27 @@ public class DragDrop extends MouseAdapter {
 
     private Point lastPositionBeforeSnap;
 
+    /**
+     * <b>Transformer:</b> Gets the last position before snap
+     * <b>Postcondition:</b> returns the last position before snap
+     */
     public Point getLastPositionBeforeSnap() {
         return lastPositionBeforeSnap;
     }
 
 
+    /**
+     * <b>Observer:</b> Checks if the label is released
+     * <b>Postcondition:</b> returns true if the label is released otherwise false
+     */
     public void mouseReleased(MouseEvent e) {
             if(isDragging && activeLabel != null){
-                System.out.println("Active label position: " + activeLabel.getLocation());
-                System.out.println("Last position before snap: " + lastPositionBeforeSnap);
                 snapToTile();
-                System.out.println("Active label location: " + activeLabel.getLocation());
-
                 Point newPosition = activeLabel.getLocation();
 
                 if (gui.getEnemyPawn1Label() == null){
                     if (gui.isCardInPlay() && gui.getCardInPlayNumber() == 2) {
                         gui.updateGameInfoForReDraw();
-
                     }
 
                     if (gui.isCardInPlay()) {
@@ -333,7 +294,6 @@ public class DragDrop extends MouseAdapter {
                 if(gui.getEnemyPawn2Label() == null){
                     if (gui.isCardInPlay() && gui.getCardInPlayNumber() == 2) {
                         gui.updateGameInfoForReDraw();
-
                     }
 
                     if (gui.isCardInPlay()) {
@@ -343,33 +303,22 @@ public class DragDrop extends MouseAdapter {
                     activeLabel = null;
                 }
 
-                System.out.println("ENEMY COLOR INSIDE CLICKED: "+ gui.getEnemyPawn1().getColor());
-                System.out.println("PLAYER COLOR INSIDE CLICKED: " + gui.getPawn1().getColor());
-                System.out.println("ENEMY POSITION INSIDE CLICKED: "+ gui.getEnemyPawn1Label().getLocation());
-                System.out.println("PLAYER POSITION INSIDE CLICKED: " + activeLabel.getLocation());
-
                 if (newPosition.equals(gui.getEnemyPawn1Label().getLocation())) {
-                    System.out.println("SWAPPING PAWNS NIGAAAAAAAAAAAAA1");
                     swapPawnPositions(activeLabel, gui.getEnemyPawn1Label());
                 } else if (newPosition.equals(gui.getEnemyPawn2Label().getLocation())) {
-                    System.out.println("SWAPPING PAWNS NIGAAAAAAAAAAAAA2");
                     swapPawnPositions(activeLabel, gui.getEnemyPawn2Label());
                 }
-
-
 
                 isDragging = false;
                 activeLabel = null;
 
             if (gui.isCardInPlay() && gui.getCardInPlayNumber() == 2) {
                 gui.updateGameInfoForReDraw();
-
             }
 
             if (gui.isCardInPlay()) {
                 gui.updateGameInfo();
             }
-
         }
     }
 
@@ -392,14 +341,23 @@ public class DragDrop extends MouseAdapter {
         }
     }
 
+    /**
+     * <b>Observer:</b> Checks if the label is within bounds
+     * <b>Postcondition:</b> returns true if the label is within bounds otherwise false
+     */
     private boolean isWithinBounds(MouseEvent e, JLabel label) {
         Rectangle bounds = label.getBounds();
-
         Point mousePoint = SwingUtilities.convertPoint(e.getComponent(), e.getPoint(), label.getParent());
 
         return bounds.contains(mousePoint);
     }
 
+    /**
+     * <b>Transformer:</b> Finds the nearest end slide square
+     * <b>Postcondition:</b> The nearest end slide square has been found
+     * @param startSlideIndex The start slide index
+     * @return The nearest end slide square
+     */
     public int findNearestEndSlideSquareIndex(int startSlideIndex) {
         ArrayList<Square> boardSquares = gui.getSquareOBJ();
 
@@ -413,33 +371,28 @@ public class DragDrop extends MouseAdapter {
         return -1;  // If not found, return an invalid index
     }
 
-
+    /**
+     * <b>Transformer:</b> Swaps the pawn positions
+     * <b>Postcondition:</b> The pawn positions have been swapped
+     * @param activeLabel The active label
+     * @param enemyPawnToSwapWith The enemy pawn to swap with
+     */
     public void swapPawnPositions(JLabel activeLabel, JLabel enemyPawnToSwapWith) {
-
-
-
         if (canSwapWithEnemyPawn(activeLabel, enemyPawnToSwapWith)){
-            if (activeLabel == labelToDrag1){
-                System.out.println("active label color: " + gui.getPawn1().getColor());
-            }else if (activeLabel == labelToDrag2){
-                System.out.println("active label color: " + gui.getPawn2().getColor());
-            }
-
-            if (enemyPawnToSwapWith == gui.getEnemyPawn1Label()) {
-                System.out.println("enemy label color: " + gui.getEnemyPawn1().getColor());
-            }else if (enemyPawnToSwapWith == gui.getEnemyPawn2Label()){
-                System.out.println("enemy label color: " + gui.getEnemyPawn2().getColor());
-            }else{
-                System.out.println("Something wrong here");
-            }
-
             gui.swapPawnPositions(activeLabel, enemyPawnToSwapWith);
         } else {
             JOptionPane.showMessageDialog(gui.frame, "You cannot swap positions with a safe pawn!");
         }
     }
 
+    /**
+     * <b>Observer:</b> Checks if the pawn can be swapped with the enemy pawn
+     * <b>Postcondition:</b> returns true if the pawn can be swapped with the enemy pawn otherwise false
+     * @param playerPawn The player pawn
+     * @param enemyPawn The enemy pawn
+     */
     private boolean canSwapWithEnemyPawn(JLabel playerPawn, JLabel enemyPawn) {
+        ArrayList<Square> boardSquares = gui.getSquareOBJ();
         return true;
     }
 

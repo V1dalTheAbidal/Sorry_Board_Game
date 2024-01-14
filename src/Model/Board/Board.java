@@ -6,7 +6,6 @@ import java.util.ArrayList;
  * @Author V1dalTheAbidal
  */
 public class Board{
-    private int playerPosition;
     private boolean gameStatus = false;
 
     /**

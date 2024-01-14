@@ -3,7 +3,7 @@ package Model.Pawn;
  * @version 1.0
  * @Author V1dalTheAbidal
  */
-public class PlayerPawn implements PawnCharacteristics{
+public class PlayerPawn {
     private int StartingPosition;
     private int CurrentPosition;
     private COLOR Color;
