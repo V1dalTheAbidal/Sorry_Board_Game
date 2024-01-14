@@ -33,26 +33,26 @@ public class GUI extends JFrame{
     private final JLabel infoBoxCardsLeft;
     private final JLabel cyanMID;
     private final JLabel sorryImage;
-    private JLabel card1;
-    private JLabel card2;
-    private JLabel card3;
-    private JLabel card4;
-    private JLabel card5;
-    private JLabel card7;
-    private JLabel card8;
-    private JLabel card10;
-    private JLabel card11;
-    private JLabel card12;
-    private JLabel sorryCard;
-    JLabel player1Pawn1;
+    public JLabel card1;
+    public JLabel card2;
+    public JLabel card3;
+    public JLabel card4;
+    public JLabel card5;
+    public JLabel card7;
+    public JLabel card8;
+    public JLabel card10;
+    public JLabel card11;
+    public JLabel card12;
+    public JLabel sorryCard;
+    public JLabel player1Pawn1;
     JLabel player1Pawn2;
     JLabel player2Pawn1;
     JLabel player2Pawn2;
-    private JLabel CurrentCardDisplay; //this is the card that is currently being displayed
+    public JLabel CurrentCardDisplay; //this is the card that is currently being displayed
     private final JButton FoldButton; //this is the button that folds the card
     private final JButton ReceiveCardButton; //this is the button that draws a card
     JFrame frame;
-    JPanel Board;
+    public JPanel Board;
     private final JPanel rightMenu;
     private final JPanel infoBox;
     private boolean isFoldButtonPressed;
@@ -237,7 +237,7 @@ public class GUI extends JFrame{
      * <b>Transformer:</b> Initializes all the card graphics.
      * <b>Postcondition:</b> All the card graphics have been initialized.
      */
-    void initializeAllCards(){
+    public void initializeAllCards(){
         card1 = new JLabel();
         card2 = new JLabel();
         card3 = new JLabel();
